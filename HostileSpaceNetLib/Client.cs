@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HostileSpaceNetLib
 {
-    public class Class1
+    public class Client
     {
     }
 }
