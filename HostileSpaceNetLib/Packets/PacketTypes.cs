@@ -4,9 +4,8 @@
     {
         Unknown,
         Ping,
-        Login,
-        LoginAccepted,
-        LoginFailed
+        LoginRequest,
+        LoginResponse
 
 
     }
