@@ -96,10 +96,13 @@ namespace HostileSpaceNetLib
         {
             socket.Shutdown(SocketShutdown.Both);
             socket.Close();
+
+            Disconnected?.Invoke(this, null);
         }
 
 
         public event EventHandler PacketReceieved;
+        public event EventHandler Disconnected;
 
         public PacketBase Packet
         {

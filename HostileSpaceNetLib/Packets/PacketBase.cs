@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+
 
 namespace HostileSpaceNetLib.Packets
 {
@@ -25,8 +22,8 @@ namespace HostileSpaceNetLib.Packets
 
         public PacketBase(Byte[] Buffer, Int32 Lenght)
         {
-            this.Write(Buffer, 0, Lenght);
-            this.Seek(0, SeekOrigin.Begin);
+            Write(Buffer, 0, Lenght);
+            Seek(0, SeekOrigin.Begin);
 
             reader = new BinaryReader(this);
             id = (PacketID)reader.ReadInt32();
@@ -36,7 +33,6 @@ namespace HostileSpaceNetLib.Packets
         public virtual void ReadData()
         {
         }
-
 
         public virtual void WriteData()
         {
@@ -57,5 +53,7 @@ namespace HostileSpaceNetLib.Packets
         {
             get { return writer; }
         }
+
+
     }
 }

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HostileSpaceNetLib.Packets
+﻿namespace HostileSpaceNetLib.Packets
 {
     public enum PacketID
     {
-        Unknown,
         Ping,
         Login,
         LoginAccepted,
         LoginFailed
+
+
     }
 }
