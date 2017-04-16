@@ -19,6 +19,13 @@ namespace HostileSpaceNetLib
             socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
         }
 
+        public Client(Socket Socket)
+        {
+            socket = Socket;
+
+            BeginReceive();
+        }
+
 
         public void BeginSend(PacketBase Packet)
         {
@@ -30,6 +37,8 @@ namespace HostileSpaceNetLib
             {
                 Console.WriteLine(E.Message);
                 Console.WriteLine("begin send error");
+
+                Disconnect();
             }
         }
 
@@ -42,11 +51,13 @@ namespace HostileSpaceNetLib
             catch (Exception E)
             {
                 Console.WriteLine(E.Message);
-                Console.WriteLine("begin send error");
+                Console.WriteLine("end send error");
+
+                Disconnect();
             }
         }
 
-        public void BeginReceive()
+        void BeginReceive()
         {
             try
             {
@@ -55,10 +66,12 @@ namespace HostileSpaceNetLib
                     socket.BeginReceive(buffer, 0, 1024, SocketFlags.None, EndReceive, null);
                 }
             }
-            catch
+            catch (Exception E)
             {
+                Console.WriteLine(E.Message);
+                Console.WriteLine("begin receieve error");
+
                 Disconnect();
-                Console.WriteLine("receive error");
             }
         }
 
@@ -80,22 +93,43 @@ namespace HostileSpaceNetLib
 
                 BeginReceive();
             }
-            catch
+            catch (Exception E)
             {
-                Console.WriteLine("receive error1");
+                Console.WriteLine(E.Message);
+                Console.WriteLine("end receieve error");
+
                 Disconnect();
             }
         }
 
         public void Connect(IPAddress ServerIP)
         {
-            socket.Connect(ServerIP, 1326);
+            try
+            {
+                socket.Connect(ServerIP, 1326);
+                BeginReceive();
+            }
+            catch (Exception E)
+            {
+                Console.WriteLine(E.Message);
+                Console.WriteLine("connect error");
+
+                Disconnect();
+            }
         }
 
         public void Disconnect()
         {
-            socket.Shutdown(SocketShutdown.Both);
-            socket.Close();
+            try
+            {
+                socket.Shutdown(SocketShutdown.Both);
+                socket.Close();
+            }
+            catch (Exception E)
+            {
+                Console.WriteLine(E.Message);
+                Console.WriteLine("disconnect error");
+            }
 
             Disconnected?.Invoke(this, null);
         }
