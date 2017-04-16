@@ -6,7 +6,7 @@ using HostileSpaceNetLib.Packets;
 
 namespace HostileSpaceNetLib
 {
-    class Client
+    public class Client
     {
         Socket socket;
 

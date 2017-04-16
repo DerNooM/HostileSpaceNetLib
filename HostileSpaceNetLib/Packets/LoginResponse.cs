@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HostileSpaceNetLib.Packets
 {
-    class LoginResponse : PacketBase
+    public class LoginResponse : PacketBase
     {
         public enum Responses { Unknown, Accepted, UsernameNotFound, InvalidPassword }
 

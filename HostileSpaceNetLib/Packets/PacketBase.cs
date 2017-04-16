@@ -4,7 +4,7 @@ using System.IO;
 
 namespace HostileSpaceNetLib.Packets
 {
-    class PacketBase : MemoryStream
+    public class PacketBase : MemoryStream
     {
         PacketID id = PacketID.Unknown;
 

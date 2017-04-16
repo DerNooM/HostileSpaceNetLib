@@ -3,7 +3,7 @@
 
 namespace HostileSpaceNetLib.Packets
 {
-    class LoginRequest : PacketBase
+    public class LoginRequest : PacketBase
     {
         String username = "";
         Byte[] password = new Byte[32];

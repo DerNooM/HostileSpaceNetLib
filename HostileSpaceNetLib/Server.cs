@@ -6,7 +6,7 @@ using System.Net.Sockets;
 
 namespace HostileSpaceNetLib
 {
-    class Server
+    public class Server
     {
         TcpListener listener;
         IPAddress address = IPAddress.Any;
