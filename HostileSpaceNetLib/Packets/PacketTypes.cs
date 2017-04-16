@@ -2,6 +2,7 @@
 {
     public enum PacketID
     {
+        Unknown,
         Ping,
         Login,
         LoginAccepted,

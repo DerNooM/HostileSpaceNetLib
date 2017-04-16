@@ -36,7 +36,7 @@ namespace HostileSpaceNetLib
             catch(Exception E)
             {
                 Console.WriteLine(E.Message);
-                Console.WriteLine("begin send error");
+                Console.WriteLine("beginsend error");
 
                 Disconnect();
             }
@@ -51,7 +51,7 @@ namespace HostileSpaceNetLib
             catch (Exception E)
             {
                 Console.WriteLine(E.Message);
-                Console.WriteLine("end send error");
+                Console.WriteLine("endsend error");
 
                 Disconnect();
             }
@@ -69,7 +69,7 @@ namespace HostileSpaceNetLib
             catch (Exception E)
             {
                 Console.WriteLine(E.Message);
-                Console.WriteLine("begin receieve error");
+                Console.WriteLine("beginreceieve error");
 
                 Disconnect();
             }
@@ -96,7 +96,7 @@ namespace HostileSpaceNetLib
             catch (Exception E)
             {
                 Console.WriteLine(E.Message);
-                Console.WriteLine("end receieve error");
+                Console.WriteLine("endreceieve error");
 
                 Disconnect();
             }
