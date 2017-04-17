@@ -13,6 +13,8 @@ namespace HostileSpaceNetLib
         Byte[] buffer = new Byte[1024];
         PacketBase packet;
 
+        Boolean loggedIn = false;
+
 
         public Client()
         {
@@ -147,6 +149,12 @@ namespace HostileSpaceNetLib
         public PacketBase Packet
         {
             get { return packet; }
+        }
+
+        public Boolean LoggedIn
+        {
+            get { return loggedIn; }
+            set { loggedIn = value; }
         }
 
 

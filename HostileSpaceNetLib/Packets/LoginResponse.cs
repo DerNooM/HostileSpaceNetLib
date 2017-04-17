@@ -8,7 +8,8 @@ namespace HostileSpaceNetLib.Packets
 {
     public class LoginResponse
     {
-        public enum Responses { Unknown, Accepted, UsernameNotFound, InvalidPassword }
+        public enum Responses { Unknown,
+            Accepted, InvalidPassword, AccountCreated }
 
         PacketBase packet;
     
