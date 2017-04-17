@@ -134,6 +134,12 @@ namespace HostileSpaceNetLib
             Disconnected?.Invoke(this, null);
         }
 
+        public Boolean Connected
+        {
+            get { return socket.Connected; }
+        }
+        
+
 
         public event EventHandler PacketReceieved;
         public event EventHandler Disconnected;

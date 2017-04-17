@@ -37,9 +37,7 @@ namespace HostileSpaceNetLib
             lock (syncRoot)
             {
                 foreach (Client client in clients)
-                {
-                    client.PacketReceieved -= Client_PacketReceieved;
-                    client.Disconnected -= Client_Disconnected;
+                { 
                     client.Disconnect();
                 }
             }
@@ -82,14 +80,17 @@ namespace HostileSpaceNetLib
             {
                 Socket socket = listener.EndAcceptSocket(ar);
 
-                Client client = new Client(socket);
-                client.PacketReceieved += Client_PacketReceieved;
-                client.Disconnected += Client_Disconnected;
+                Client client = new Client(socket);               
 
                 lock (syncRoot)
                 {
                     clients.Add(client);
                 }
+
+                client.PacketReceieved += Client_PacketReceieved;
+                client.Disconnected += Client_Disconnected;
+
+                BeginAcceptSocket();
             }
             catch (Exception E)
             {

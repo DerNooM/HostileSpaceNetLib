@@ -3,42 +3,44 @@
 
 namespace HostileSpaceNetLib.Packets
 {
-    public class LoginRequest : PacketBase
+    public class LoginRequest
     {
+        PacketBase packet;
+
         String username = "";
         Byte[] password = new Byte[32];
 
 
-        public LoginRequest()
-            : base(PacketID.LoginRequest)
+        public LoginRequest(String Username, Byte[] Password)
         {
+            packet = new PacketBase(PacketID.LoginRequest);
 
+            packet.Writer.Write(Username);
+            packet.Writer.Write(Password);
         }
 
-
-        public override void ReadData()
+        public LoginRequest(PacketBase Packet)
         {
-            username = Reader.ReadString();
-            password = Reader.ReadBytes(32);
-        }
+            packet = Packet;
 
-        public override void WriteData()
-        {
-            Writer.Write(username);
-            Writer.Write(password);
+            username = packet.Reader.ReadString();
+            password = packet.Reader.ReadBytes(32);
         }
 
 
         public String Username
         {
             get { return username; }
-            set { username = value; }
         }
 
         public Byte[] Password
         {
             get { return password; }
-            set { password = value; }
+        }
+
+        public PacketBase Packet
+        {
+            get { return packet; }
         }
 
 
