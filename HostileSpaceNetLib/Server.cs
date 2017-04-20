@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using HostileSpaceNetLib.Packets;
 
 namespace HostileSpaceNetLib
 {
@@ -103,9 +103,9 @@ namespace HostileSpaceNetLib
         {
             Client client = (Client)sender;
 
-            if (client.Packet.ID == Packets.PacketID.Ping)
+            if (client.Packet.ID == PacketID.Ping)
             {
-                Packets.PacketBase pong = new Packets.PacketBase(Packets.PacketID.Ping);
+                Packet pong = new Packet(PacketID.Ping);
                 client.BeginSend(pong);
             }
             else if(client.Packet.ID == Packets.PacketID.Unknown)
@@ -114,7 +114,7 @@ namespace HostileSpaceNetLib
             }
             else
             {
-                if (System.Enum.IsDefined(typeof(Packets.PacketID), client.Packet.ID))
+                if (Enum.IsDefined(typeof(PacketID), client.Packet.ID))
                 {
                     PacketReceieved?.Invoke(client, null);
                 }

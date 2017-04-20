@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.IO.Compression;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Net;
 using System.Net.Sockets;
 using HostileSpaceNetLib.Packets;
@@ -11,7 +14,7 @@ namespace HostileSpaceNetLib
         Socket socket;
 
         Byte[] buffer = new Byte[1024];
-        PacketBase packet;
+        IPacket packet;
 
         Boolean loggedIn = false;
 
@@ -29,11 +32,17 @@ namespace HostileSpaceNetLib
         }
 
 
-        public void BeginSend(PacketBase Packet)
+        public void BeginSend(IPacket Packet)
         {
             try
             {
-                socket.BeginSend(Packet.GetBuffer(), 0, (int)Packet.Length, SocketFlags.None, EndSend, null);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(stream, Packet);
+
+                    socket.BeginSend(stream.GetBuffer(), 0, (Int32)stream.Length, SocketFlags.None, EndSend, null);
+                }
             }
             catch(Exception E)
             {
@@ -85,8 +94,25 @@ namespace HostileSpaceNetLib
 
                 if (bytesRead > 0)
                 {
-                    packet = new PacketBase(buffer, bytesRead);
-                    PacketReceieved?.Invoke(this, null);
+                    packet = null;
+
+                    using (MemoryStream stream = new MemoryStream(buffer))
+                    {
+                        BinaryFormatter formatter = new BinaryFormatter();
+
+                        try
+                        {
+                            packet = (IPacket)formatter.Deserialize(stream);
+                        }
+                        catch(Exception E)
+                        {
+                            Console.WriteLine(E.Message);
+                            Console.WriteLine("deserialization problem");
+                        }
+                    }
+
+                    if(packet != null)
+                        PacketReceieved?.Invoke(this, null);
                 }
                 else
                 {
@@ -95,10 +121,11 @@ namespace HostileSpaceNetLib
 
                 BeginReceive();
             }
-            catch (Exception E)
+            catch// (Exception E)
             {
-                Console.WriteLine(E.Message);
-                Console.WriteLine("endreceieve error");
+                // noom: dont need an errormessage here
+                //Console.WriteLine(E.Message);
+                //Console.WriteLine("endreceieve error");
 
                 Disconnect();
             }
@@ -136,25 +163,24 @@ namespace HostileSpaceNetLib
             Disconnected?.Invoke(this, null);
         }
 
-        public Boolean Connected
-        {
-            get { return socket.Connected; }
-        }
-        
-
 
         public event EventHandler PacketReceieved;
         public event EventHandler Disconnected;
 
-        public PacketBase Packet
+        public Boolean Connected
         {
-            get { return packet; }
+            get { return socket.Connected; }
         }
 
         public Boolean LoggedIn
         {
             get { return loggedIn; }
             set { loggedIn = value; }
+        }
+
+        public IPacket Packet
+        {
+            get { return packet; }
         }
 
 

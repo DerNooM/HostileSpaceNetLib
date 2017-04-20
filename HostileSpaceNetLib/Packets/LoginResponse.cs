@@ -6,39 +6,25 @@ using System.Threading.Tasks;
 
 namespace HostileSpaceNetLib.Packets
 {
-    public class LoginResponse
+    [Serializable]
+    public class LoginResponse : Packet
     {
         public enum Responses { Unknown,
             Accepted, InvalidPassword, AccountCreated }
-
-        PacketBase packet;
     
         Responses response = Responses.Unknown;
 
 
-        public LoginResponse(Responses Response)
+        public LoginResponse()
+            : base(PacketID.LoginResponse)
         {
-            packet = new PacketBase(PacketID.LoginResponse);
-
-            packet.Writer.Write((Int32)Response);
-        }
-
-        public LoginResponse(PacketBase Packet)
-        {
-            packet = Packet;
-
-            response = (Responses)packet.Reader.ReadInt32();
         }
 
 
         public Responses Response
         {
             get { return response; }
-        }
-
-        public PacketBase Packet
-        {
-            get { return packet; }
+            set { response = value; }
         }
 
 

@@ -45,12 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Packets\IPacket.cs" />
     <Compile Include="Packets\LoginRequest.cs" />
     <Compile Include="Packets\LoginResponse.cs" />
-    <Compile Include="Packets\PacketBase.cs" />
+    <Compile Include="Packets\Packet.cs" />
     <Compile Include="Packets\PacketTypes.cs" />
-    <Compile Include="Packets\SetDestination.cs" />
-    <Compile Include="Packets\UpdateShip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
   </ItemGroup>
