@@ -127,8 +127,9 @@ namespace HostileSpaceNetLib
         }
 
         private void Client_Disconnected(object sender, EventArgs e)
-        {
+        {          
             Disconnect((Client)sender);
+            sender = null;
         }
 
 

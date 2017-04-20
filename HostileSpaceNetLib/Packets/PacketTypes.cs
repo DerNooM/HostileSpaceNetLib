@@ -5,7 +5,10 @@
         Unknown,
         Ping,
         LoginRequest,
-        LoginResponse
+        LoginResponse,
+
+        UpdateShip,
+        SetDestination
 
 
     }
