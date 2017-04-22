@@ -5,7 +5,12 @@
         Unknown,
         Ping,
         LoginRequest,
-        LoginResponse
+        LoginResponse,
+
+        CharacterRequest,
+
+        CreateGame,
+        GameCreated
 
 
     }

@@ -10,7 +10,7 @@ namespace HostileSpaceNetLib.Packets
     public class LoginResponse : Packet
     {
         public enum Responses { Unknown,
-            Accepted, InvalidPassword, AccountCreated }
+            Accepted, InvalidPassword, AccountCreated, AllreadyLoggedIn }
     
         Responses response = Responses.Unknown;
 

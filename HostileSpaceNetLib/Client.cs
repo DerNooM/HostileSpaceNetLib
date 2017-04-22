@@ -16,7 +16,11 @@ namespace HostileSpaceNetLib
         Byte[] buffer = new Byte[1024];
         IPacket packet;
 
-        Boolean loggedIn = false;
+        UInt32 totalBytesUp = 0;
+        UInt32 totalBytesDown = 0;
+        UInt16 bytesSecUp = 0;
+        UInt16 bytesSecDown = 0;
+        readonly Object syncRoot = new Object();
 
 
         public Client()
@@ -42,6 +46,12 @@ namespace HostileSpaceNetLib
                     formatter.Serialize(stream, Packet);
 
                     socket.BeginSend(stream.GetBuffer(), 0, (Int32)stream.Length, SocketFlags.None, EndSend, null);
+
+                    lock (syncRoot)
+                    {
+                        totalBytesUp += (UInt32)stream.Length;
+                        bytesSecUp += (UInt16)stream.Length;
+                    }
                 }
             }
             catch(Exception E)
@@ -91,6 +101,12 @@ namespace HostileSpaceNetLib
             try
             {
                 int bytesRead = socket.EndReceive(ar);
+
+                lock (syncRoot)
+                {
+                    totalBytesDown += (UInt32)bytesRead;
+                    bytesSecDown += (UInt16)bytesRead;
+                }
 
                 if (bytesRead > 0)
                 {
@@ -172,15 +188,31 @@ namespace HostileSpaceNetLib
             get { return socket.Connected; }
         }
 
-        public Boolean LoggedIn
-        {
-            get { return loggedIn; }
-            set { loggedIn = value; }
-        }
-
         public IPacket Packet
         {
             get { return packet; }
+        }
+
+        public UInt32 TotalBytesUp
+        {
+            get { return totalBytesUp; }
+        }
+
+        public UInt32 TotalBytesDown
+        {
+            get { return totalBytesDown; }
+        }
+
+        public UInt16 BytesSecUp
+        {
+            get { return bytesSecUp; }
+            set { bytesSecUp = value; }
+        }
+
+        public UInt16 BytesSecDown
+        {
+            get { return bytesSecDown; }
+            set { bytesSecDown = value; }
         }
 
 

@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Packets\CharacterRequest.cs" />
+    <Compile Include="Packets\CreateGame.cs" />
     <Compile Include="Packets\IPacket.cs" />
     <Compile Include="Packets\LoginRequest.cs" />
     <Compile Include="Packets\LoginResponse.cs" />

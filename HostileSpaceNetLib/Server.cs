@@ -23,7 +23,7 @@ namespace HostileSpaceNetLib
 
         public void Start()
         {
-            listener = new TcpListener(IPAddress.Any, 1326);
+            listener = new TcpListener(IPAddress.Loopback, 1326);
             listener.Start(100);
 
             BeginAcceptSocket();
